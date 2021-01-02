@@ -13,3 +13,6 @@ if resource was successfully stored, `resourceId` will be returned
   
 - To get resource from any service issue `get` request to any service:
 `http://<service_uri>/v1/resource/<resourceId>`
+
+Credits:
+  - based on: https://github.com/danielfsousa/express-rest-boilerplate
