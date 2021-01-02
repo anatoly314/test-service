@@ -1,7 +1,8 @@
 version: "3"
 services:
   registry:
-    build: https://github.com/anatoly314/test-service.git
+    #image: 'node-docker:latest'
+    build:
     hostname: registry
     ports:
       - '3000:3000'
@@ -9,8 +10,9 @@ services:
       - NODE_ENV=development
       - PORT=3000
       - JWT_SECRET=bA2xcjpf8y5aSUFsNB2qN5yymUBSs6es3qHoFpGkec75RCeBb8cpKauGefw5qy4
+      - SERVICE_TYPE=registry
   service1:
-    build: https://github.com/anatoly314/test-service.git
+    image: 'node-docker:latest'
     hostname: service1
     links:
       - registry
@@ -22,4 +24,35 @@ services:
       - NODE_ENV=development
       - PORT=3000
       - JWT_SECRET=bA2xcjpf8y5aSUFsNB2qN5yymUBSs6es3qHoFpGkec75RCeBb8cpKauGefw5qy4
-      - REGISTRY_HOST=registry
+      - REGISTRY_URI=registry:3000
+      - SERVICE_TYPE=service
+  service2:
+    image: 'node-docker:latest'
+    hostname: service2
+    links:
+      - registry
+    depends_on:
+      - registry
+    ports:
+      - '3002:3000'
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - JWT_SECRET=bA2xcjpf8y5aSUFsNB2qN5yymUBSs6es3qHoFpGkec75RCeBb8cpKauGefw5qy4
+      - REGISTRY_URI=registry:3000
+      - SERVICE_TYPE=service
+  service3:
+    image: 'node-docker:latest'
+    hostname: service3
+    links:
+      - registry
+    depends_on:
+      - registry
+    ports:
+      - '3003:3000'
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - JWT_SECRET=bA2xcjpf8y5aSUFsNB2qN5yymUBSs6es3qHoFpGkec75RCeBb8cpKauGefw5qy4
+      - REGISTRY_URI=registry:3000
+      - SERVICE_TYPE=service

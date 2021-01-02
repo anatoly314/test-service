@@ -5,10 +5,12 @@ import * as controller from '../../controllers/resource.controller';
 const router = express.Router();
 
 router
-  .route('/')
+  .route('/:resourceId')
   .get(authorize(), controller.get)
-  .post(authorize(), controller.create);
 
+router
+    .route('/')
+    .post(authorize(), controller.create);
 
 
 export default router;
