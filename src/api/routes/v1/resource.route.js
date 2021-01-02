@@ -1,4 +1,5 @@
 import express from "express";
+
 import { authorize } from "../../middlewares/auth";
 import * as controller from '../../controllers/resource.controller';
 

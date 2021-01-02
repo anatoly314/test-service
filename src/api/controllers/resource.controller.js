@@ -1,55 +1,16 @@
 import httpStatus from "http-status";
-import { v4 as uuidv4 } from 'uuid';
-import axios from "axios";
 
 import { APIError } from "../utils/APIError";
+import {
+  getResourceLocally,
+  keepResourceRemotely,
+  getResourceRemotely,
+  keepResourceLocally
+} from '../models/resource.model';
 
-const registryUri = `http://${process.env.REGISTRY_URI}/v1/resource`;
 
-
-/**
- * If REGISTRY_HOST provided this is regular service, otherwise it's registry which consolidates all resources
- * @type {boolean}
- */
 const isRegistryService = process.env.SERVICE_TYPE === 'registry';
-const resources = {};
 
-function getResourceLocally(resourceId){
-  return resources[resourceId];
-}
-
-async function getResourceRemotely(resourceId, token) {
-  const config = {
-    headers: {
-      Authorization: token
-    }
-  };
-
-  const response = await axios.get(`${registryUri}/${resourceId}`, config);
-  const resource = response.data;
-
-  return resource;
-}
-
-function keepResourceLocally(resource) {
-  const resourceId = uuidv4();
-  resources[resourceId] = resource;
-
-  return resourceId;
-}
-
-async function keepResourceRemotely(resource, token) {
-  const config = {
-    headers: {
-      Authorization: token
-    }
-  };
-
-  const response = await axios.post(registryUri, resource, config);
-  const resourceId = response.data.resourceId;
-
-  return resourceId;
-}
 
 /**
  * Get resource

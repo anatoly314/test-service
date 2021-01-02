@@ -1,5 +1,6 @@
 import httpStatus from 'http-status';
 import passport from 'passport';
+
 import { APIError } from "../utils/APIError";
 
 const handleJWT = (req, res, next) => async (err, user, info) => {
