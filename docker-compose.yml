@@ -1,20 +1,25 @@
 version: "3"
 services:
-  zookeeper:
-    image: 'bitnami/zookeeper:latest'
+  registry:
+    image: 'node-docker:latest'
+    hostname: registry
     ports:
-      - '2181:2181'
+      - '3000:3000'
     environment:
-      - ALLOW_ANONYMOUS_LOGIN=yes
-  kafka:
-    image: 'bitnami/kafka:latest'
-    ports:
-      - '9092:9092'
-    environment:
-      - KAFKA_BROKER_ID=1
-      - KAFKA_LISTENERS=PLAINTEXT://:9092
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
-      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-      - ALLOW_PLAINTEXT_LISTENER=yes
+      - NODE_ENV=development
+      - PORT=3000
+      - JWT_SECRET=bA2xcjpf8y5aSUFsNB2qN5yymUBSs6es3qHoFpGkec75RCeBb8cpKauGefw5qy4
+  service1:
+    image: 'node-docker:latest'
+    hostname: service1
+    links:
+      - registry
     depends_on:
-      - zookeeper
+      - registry
+    ports:
+      - '3001:3000'
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - JWT_SECRET=bA2xcjpf8y5aSUFsNB2qN5yymUBSs6es3qHoFpGkec75RCeBb8cpKauGefw5qy4
+      - REGISTRY_HOST=registry
