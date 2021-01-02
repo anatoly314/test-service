@@ -16,7 +16,7 @@ if resource was successfully stored, `resourceId` will be returned
   
 - All requests MUST have `Authentication` header with **jwt** token generated 
 with following key: `bA2xcjpf8y5aSUFsNB2qN5yymUBSs6es3qHoFpGkec75RCeBb8cpKauGefw5qy4`
-  - You can use [jwt.io](jwt.io) to generate required token
+  - You can use [jwt.io](https://jwt.io) to generate required token
 
 Credits:
   - based on: https://github.com/danielfsousa/express-rest-boilerplate
