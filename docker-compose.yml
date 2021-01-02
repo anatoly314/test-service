@@ -1,7 +1,7 @@
 version: "3"
 services:
   registry:
-    image: 'node-docker:latest'
+    build: https://github.com/anatoly314/test-service.git
     hostname: registry
     ports:
       - '3000:3000'
@@ -10,7 +10,7 @@ services:
       - PORT=3000
       - JWT_SECRET=bA2xcjpf8y5aSUFsNB2qN5yymUBSs6es3qHoFpGkec75RCeBb8cpKauGefw5qy4
   service1:
-    image: 'node-docker:latest'
+    build: https://github.com/anatoly314/test-service.git
     hostname: service1
     links:
       - registry
