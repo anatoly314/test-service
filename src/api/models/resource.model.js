@@ -1,7 +1,6 @@
-import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
-const registryUri = `http://${process.env.REGISTRY_URI}/v1/resource`;
+import { sendResourceToRegistry, getResourceFromRegistry } from "../../config/socket";
 
 const resources = {};
 
@@ -9,15 +8,8 @@ export function getResourceLocally(resourceId){
     return resources[resourceId];
 }
 
-export async function getResourceRemotely(resourceId, token) {
-    const config = {
-        headers: {
-            Authorization: token
-        }
-    };
-
-    const response = await axios.get(`${registryUri}/${resourceId}`, config);
-    const resource = response.data;
+export async function getResourceRemotely(resourceId) {
+    const resource = await getResourceFromRegistry(resourceId);
 
     return resource;
 }
@@ -29,15 +21,8 @@ export function keepResourceLocally(resource) {
     return resourceId;
 }
 
-export async function keepResourceRemotely(resource, token) {
-    const config = {
-        headers: {
-            Authorization: token
-        }
-    };
+export async function keepResourceRemotely(resource) {
+    const response = await sendResourceToRegistry(resource);
 
-    const response = await axios.post(registryUri, resource, config);
-    const resourceId = response.data.resourceId;
-
-    return resourceId;
+    return response.resourceId;
 }

@@ -1,5 +1,7 @@
 import './config/env';
-console.log('JWT_SECRET', process.env.JWT_SECRET);
+import('./config/socket');
+
+import './config/socket';
 
 import app from './config/express';
 import logger from './config/logger';

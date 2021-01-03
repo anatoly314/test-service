@@ -5,9 +5,11 @@ services:
     hostname: registry
     ports:
       - '3000:3000'
+      - '3010:3010'
     environment:
       - NODE_ENV=development
       - PORT=3000
+      - SOCKET_PORT=3010
       - JWT_SECRET=bA2xcjpf8y5aSUFsNB2qN5yymUBSs6es3qHoFpGkec75RCeBb8cpKauGefw5qy4
       - SERVICE_TYPE=registry
   service1:
@@ -22,8 +24,9 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=3000
+      - SOCKET_PORT=3010
       - JWT_SECRET=bA2xcjpf8y5aSUFsNB2qN5yymUBSs6es3qHoFpGkec75RCeBb8cpKauGefw5qy4
-      - REGISTRY_URI=registry:3000
+      - REGISTRY_URI=registry:3010
       - SERVICE_TYPE=service
   service2:
     image: 'test-service:latest'
@@ -38,7 +41,7 @@ services:
       - NODE_ENV=development
       - PORT=3000
       - JWT_SECRET=bA2xcjpf8y5aSUFsNB2qN5yymUBSs6es3qHoFpGkec75RCeBb8cpKauGefw5qy4
-      - REGISTRY_URI=registry:3000
+      - REGISTRY_URI=registry:3010
       - SERVICE_TYPE=service
   service3:
     image: 'test-service:latest'
@@ -53,5 +56,5 @@ services:
       - NODE_ENV=development
       - PORT=3000
       - JWT_SECRET=bA2xcjpf8y5aSUFsNB2qN5yymUBSs6es3qHoFpGkec75RCeBb8cpKauGefw5qy4
-      - REGISTRY_URI=registry:3000
+      - REGISTRY_URI=registry:3010
       - SERVICE_TYPE=service

@@ -8,25 +8,17 @@ import {
   keepResourceLocally
 } from '../models/resource.model';
 
-
 const isRegistryService = process.env.SERVICE_TYPE === 'registry';
 
-
-/**
- * Get resource
- * @public
- */
 export const get = async (req, res, next) => {
-
   try {
     const resourceId = req.params.resourceId;
-
     let resource;
+
     if (isRegistryService) {
       resource = getResourceLocally(resourceId);
     } else {
-      const token = req.headers.authorization;
-      resource = await getResourceRemotely(resourceId, token);
+      resource = await getResourceRemotely(resourceId);
     }
 
     if (!resource) {
@@ -40,8 +32,6 @@ export const get = async (req, res, next) => {
   } catch (e) {
     return next(e);
   }
-
-
 }
 
 export const create = async (req, res, next) => {
@@ -52,8 +42,7 @@ export const create = async (req, res, next) => {
     if (isRegistryService) {
       resourceId = keepResourceLocally(resource);
     } else {
-      const token = req.headers.authorization;
-      resourceId = await keepResourceRemotely(resource, token);
+      resourceId = await keepResourceRemotely(resource);
     }
     res.status(httpStatus.CREATED);
     res.json({
